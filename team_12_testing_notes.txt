@@ -1,0 +1,11 @@
+Tester Nots: (11 Bugs)
+- Warning: overwrite_from_args uses iteritems(), which is not available in Python 3.
+- BUG_NOTE: overwrite_from_args silently swallows an important exception when args has bad data
+- BUG_NOTE: overwrite_from_args silently swallows an important exception when set_parameter fails
+- BUG_NOTE: data_loader fails ungracefully when ENPM611_PROJECT_DATA_PATH is not set, leading to a TypeError when open() is called.
+- BUG_NOTE: ExampleAnalysis fails with an IndexError when issue.creator is None.
+- BUG_NOTE: TopLabelsAnalyzer fails with TypeError when issue.labels is None.
+- BUG_NOTE: UserAnalyzer does not have a run() method, but it's called in __main__.
+- BUG_NOTE: EventAnalysis fails with a TypeError when event.event_date is None.
+- BUG_NOTE: MonthlyIssueAnalyser fails with ValueError when issue.created_date is invalid.
+- BUG_NOTE: Issue initialization fails with KeyError when no Issue.state is provided.

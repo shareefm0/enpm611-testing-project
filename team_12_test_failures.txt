@@ -1,0 +1,183 @@
+.................ERROR_NOTE: overwrite_from_args silently swallows an important exception when args has bad data
+FERROR_NOTE: overwrite_from_args silently swallows an important exception when set_parameter fails
+F.Warning: overwrite_from_args uses iteritems(), which is not available in Python 3.
+.EEERROR_NOTE: data_loader fails ungracefully when ENPM611_PROJECT_DATA_PATH is not set, leading to a TypeError when open() is called.
+ELoaded 1 issues from /home/user/project/data.json.
+....ERROR_NOTE: ExampleAnalysis fails with an IndexError when issue.creator is None.
+
+
+Found 1 events across 1 issues.
+
+
+/usr/lib64/python3.13/site-packages/gi/overrides/Gtk.py:1642: DeprecationWarning: Gtk.CssProvider.load_from_data is deprecated
+  super(CssProvider, self).load_from_data(text, length)
+/home/user/.local/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4.py:81: DeprecationWarning: Gtk.Widget.get_style_context is deprecated
+  style_ctx = self.get_style_context()
+/home/user/.local/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4.py:82: DeprecationWarning: Gtk.StyleContext.add_provider is deprecated
+  style_ctx.add_provider(css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+/home/user/.local/lib/python3.13/site-packages/matplotlib/backends/backend_gtk4.py:83: DeprecationWarning: Gtk.StyleContext.add_class is deprecated
+  style_ctx.add_class("matplotlib-canvas")
+E/home/user/.local/lib/python3.13/site-packages/matplotlib/backends/_backend_gtk.py:257: DeprecationWarning: Gtk.Widget.get_allocation is deprecated
+  canvas_size = self.canvas.get_allocation()
+.....ERROR_NOTE: TopLabelsAnalyzer fails with TypeError when issue.labels is None.
+EERROR_NOTE: UserAnalyzer does not have a run() method, but it's called in __main__.
+E.ERROR_NOTE: EventAnalysis fails with a TypeError when event.event_date is None.
+E...ERROR_NOTE: MonthlyIssueAnalyser fails with ValueError when issue.created_date is invalid.
+E......ERROR_NOTE: Issue initialization fails with KeyError when no Issue.state is provided.
+E
+======================================================================
+ERROR: test_set_parameter_non_string (test_config.TestConfig.test_set_parameter_non_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 78, in test_set_parameter_non_string
+    config.set_parameter('PARAM', {'a': 1})
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 144, in faulty_set_parameter
+    raise Exception("Test exception in set_parameter")
+Exception: Test exception in set_parameter
+
+======================================================================
+ERROR: test_set_parameter_string (test_config.TestConfig.test_set_parameter_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 74, in test_set_parameter_string
+    config.set_parameter('PARAM', 'value')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 144, in faulty_set_parameter
+    raise Exception("Test exception in set_parameter")
+Exception: Test exception in set_parameter
+
+======================================================================
+ERROR: test_data_loader_no_data_path_raises_typeerror (test_data_loader.TestDataLoader.test_data_loader_no_data_path_raises_typeerror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_data_loader.py", line 51, in test_data_loader_no_data_path_raises_typeerror
+    loader.get_issues()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/data_loader.py", line 29, in get_issues
+    _ISSUES = self._load()
+  File "/home/user/PycharmProjects/enpm611-testing-project/data_loader.py", line 37, in _load
+    with open(self.data_path,'r') as fin:
+         ~~~~^^^^^^^^^^^^^^^^^^^^
+TypeError: expected str, bytes or os.PathLike object, not NoneType
+
+======================================================================
+ERROR: test_example_analysis_with_none_creator (test_example_analysis.TestExampleAnalysis.test_example_analysis_with_none_creator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_example_analysis.py", line 48, in test_example_analysis_with_none_creator
+    analysis.run()
+    ~~~~~~~~~~~~^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/example_analysis.py", line 53, in run
+    df_hist = df.groupby(df["creator"]).value_counts().nlargest(top_n).plot(kind="bar", figsize=(14,8), title=f"Top {top_n} issue creators")
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/plotting/_core.py", line 1030, in __call__
+    return plot_backend.plot(data, kind=kind, **kwargs)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/plotting/_matplotlib/__init__.py", line 71, in plot
+    plot_obj.generate()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/plotting/_matplotlib/core.py", line 508, in generate
+    self._post_plot_logic(ax, self.data)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/plotting/_matplotlib/core.py", line 1972, in _post_plot_logic
+    s_edge = self.ax_pos[0] - 0.25 + self.lim_offset
+             ~~~~~~~~~~~^^^
+IndexError: index 0 is out of bounds for axis 0 with size 0
+
+======================================================================
+ERROR: test_top_labels_analyzer_issue_with_none_labels (test_feature_2.TestTopLabelsAnalyzer.test_top_labels_analyzer_issue_with_none_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_feature_2.py", line 57, in test_top_labels_analyzer_issue_with_none_labels
+    analyzer.analyse()
+    ~~~~~~~~~~~~~~~~^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/feature_2.py", line 27, in analyse
+    labels.extend(issue.labels)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+======================================================================
+ERROR: test_user_analyzer_missing_run_method (test_feature_3.TestUserAnalyzer.test_user_analyzer_missing_run_method)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_feature_3.py", line 30, in test_user_analyzer_missing_run_method
+    analyzer.run()
+    ^^^^^^^^^^^^
+AttributeError: 'UserAnalyzer' object has no attribute 'run'
+
+======================================================================
+ERROR: test_event_analysis_with_none_event_date (test_feature_4.TestEventAnalysis.test_event_analysis_with_none_event_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_feature_4.py", line 30, in test_event_analysis_with_none_event_date
+    analysis.run()
+    ~~~~~~~~~~~~^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/feature_4.py", line 28, in run
+    df = df.groupby('date').count().resample('D').sum().fillna(0)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/core/generic.py", line 9771, in resample
+    return get_resampler(
+        cast("Series | DataFrame", self),
+    ...<10 lines>...
+        group_keys=group_keys,
+    )
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/core/resample.py", line 2050, in get_resampler
+    return tg._get_resampler(obj, kind=kind)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/user/.local/lib/python3.13/site-packages/pandas/core/resample.py", line 2272, in _get_resampler
+    raise TypeError(
+    ...<3 lines>...
+    )
+TypeError: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
+
+======================================================================
+ERROR: test_monthly_issue_analyser_missing_created_date (test_first_feature.TestMonthlyIssueAnalyser.test_monthly_issue_analyser_missing_created_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_first_feature.py", line 51, in test_monthly_issue_analyser_missing_created_date
+    analyser.analyse()
+    ~~~~~~~~~~~~~~~~^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/first_feature.py", line 34, in analyse
+    issue_date = datetime.fromisoformat(issue_date_str)
+ValueError: Invalid isoformat string: 'invalid'
+
+======================================================================
+ERROR: test_issue_invalid_state_raises_keyerror (test_model.TestModel.test_issue_invalid_state_raises_keyerror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_model.py", line 92, in test_issue_invalid_state_raises_keyerror
+    Issue(issue_data)
+    ~~~~~^^^^^^^^^^^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/model.py", line 60, in __init__
+    self.from_json(jobj)
+    ~~~~~~~~~~~~~~^^^^^^
+  File "/home/user/PycharmProjects/enpm611-testing-project/model.py", line 66, in from_json
+    self.state = State[jobj.get('state')]
+                 ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.13/enum.py", line 782, in __getitem__
+    return cls._member_map_[name]
+           ~~~~~~~~~~~~~~~~^^^^^^
+KeyError: None
+
+======================================================================
+FAIL: test_overwrite_from_args_exception (test_config.TestConfig.test_overwrite_from_args_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 114, in test_overwrite_from_args_exception
+    self.assertRaises(TypeError, config.overwrite_from_args, args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TypeError not raised by overwrite_from_args
+
+======================================================================
+FAIL: test_overwrite_from_args_faulty_set_parameter (test_config.TestConfig.test_overwrite_from_args_faulty_set_parameter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/PycharmProjects/enpm611-testing-project/test_config.py", line 156, in test_overwrite_from_args_faulty_set_parameter
+    self.assertRaises(Exception, config.overwrite_from_args, args)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exception not raised by overwrite_from_args
+
+----------------------------------------------------------------------
+Ran 49 tests in 0.544s
+
+FAILED (failures=2, errors=9)
